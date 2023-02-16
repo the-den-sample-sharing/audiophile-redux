@@ -1,0 +1,73 @@
+/* .auth-body {
+  background-color: rgb(23, 16, 16);
+  height: 100vh;
+} */
+
+.input-container {
+  border-radius: 8px;
+  display: grid;
+  grid-template-rows: 1fr 2fr 1fr;
+  padding-left: 3vh;
+  padding-right: 3vh;
+  padding-top: 2vh;
+  padding-bottom: 2vh;
+  height: 30vh;
+  font-family: "Prompt", sans-serif;
+}
+
+.auth-main {
+  background-size: cover;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+}
+
+.input-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2vh;
+  gap: 2vh;
+}
+
+.email-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2vh;
+  margin-top: 2vh;
+  width: 15vw;
+}
+
+.password-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2vh;
+  width: 15vw;
+  margin-top: 2vh;
+  margin-bottom: 2vh;
+}
+
+.login-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 1vh;
+  height: 5vh;
+  font-family: "Chakra Petch", sans-serif;
+  font-weight: bold;
+  color: black;
+}
+
+.login-logo {
+  margin-right: 1vh;
+  height: 5vh;
+}
+
+.login-message {
+  color: black;
+  font-family: "Varela Round", sans-serif;
+}
