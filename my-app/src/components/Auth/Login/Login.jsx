@@ -1,17 +1,17 @@
 import React from "react";
-import { NavLink, useParams } from "react-router-dom";
+import { Form, NavLink } from "react-router-dom";
 import { Button } from "@mui/material";
 import TextField from "@mui/material/TextField";
-import { useContext, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Login.css";
-import { login } from "../../services/auth";
-import Logo from "./assets/turn.png";
+
+import { login } from "../../../services/auth";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const history = useHistory();
+  const history = useNavigate();
 
   const handleLogin = async () => {
     const userResp = await login(email, password);
@@ -23,7 +23,7 @@ export default function Login() {
     <div className="auth-body">
       <div className="auth-main">
         <div className="login-header">
-          <img className="login-logo" src={Logo}></img>
+          <img className="login-logo" alt="logo"></img>
           <h1>The Den</h1>
         </div>
         <div className="login-message">
@@ -31,8 +31,8 @@ export default function Login() {
         </div>
 
         <div className="input-container">
-          <div className="input-form">
-            <div className="email-container">
+          <Form className="input-form">
+            <Form.Group className="email-container">
               <TextField
                 // id="outlined-basic"
                 label="Email"
@@ -40,9 +40,9 @@ export default function Login() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
-            </div>
+            </Form.Group>
 
-            <div className="password-container">
+            <Form.Group className="password-container">
               <TextField
                 // id="outlined-basic"
                 label="Password"
@@ -51,7 +51,7 @@ export default function Login() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
-            </div>
+            </Form.Group>
             <Button
               variant="contained"
               className="login-button"
@@ -65,7 +65,7 @@ export default function Login() {
               Don&apos;t have an account?{" "}
               <NavLink to="/sign-up">Sign Up</NavLink>
             </p>
-          </div>
+          </Form>
         </div>
       </div>
     </div>

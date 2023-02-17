@@ -1,0 +1,34 @@
+body {
+  overflow-x: hidden;
+}
+
+.about-main {
+  height: 100vh;
+  width: 100vw;
+  background-color: rgb(20, 20, 20);
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+}
+
+.catchy-container {
+  margin-top: 10vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.catchy-title {
+  font-family: "Chakra Petch", sans-serif;
+  color: ivory;
+  font-weight: bold;
+  font-size: 3vh;
+}
+
+.attention-grabber {
+  width: 30vw;
+  margin-left: 6vh;
+  color: ivory;
+}
+
+.synth-img {
+  height: 30vh;
+}

@@ -1,76 +1,65 @@
 import React from "react";
-// import { NavLink, useParams } from 'react-router-dom';
 import { Button } from "@mui/material";
 import TextField from "@mui/material/TextField";
-import { useContext, useState } from "react";
-import { NavLink, useHistory } from "react-router-dom";
-import Logo from "./assets/turn.png";
-
+import { Form } from "react-bootstrap";
 import "./SignUp.css";
-import { signUpUser } from "../../services/auth";
-import { UserContext } from "../../context/userContext";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { setEmail, setPassword } from "../../../features/user/userSlice";
+import { createUserAsync } from "../../../features/user/userSlice";
 
 export default function SignUp() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const history = useHistory();
-  const { setUser } = useContext(UserContext);
+  const { email, password } = useSelector((state) => state.user);
 
-  const handleSignUp = async () => {
-    const userResp = await signUpUser(email, password);
-    setUser(userResp);
-    console.log(userResp);
-    history.push("/landing");
-  };
-
+  const dispatch = useDispatch();
   return (
     <div className="auth-body">
       <div className="auth-main">
         <div className="login-header">
-          <img className="login-logo" src={Logo}></img>
-          <h1>The Den</h1>
+          <img className="login-logo" alt="logo"></img>
+          <h1>Audiophile</h1>
         </div>
         <div className="login-message">
           <p className="create-account">Create your free account</p>
           <p className="unlock">Unlock new skills and sounds.</p>
         </div>
         <div className="input-container">
-          <div className="input-form">
-            <div className="email-container">
+          <Form
+            className="input-form"
+            onSubmit={() => dispatch(createUserAsync(email, password))}
+          >
+            <Form.Group className="email-container">
               <TextField
-                // id="outlined-basic"
                 label="Email"
                 variant="outlined"
                 id="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => dispatch(setEmail(e.target.value))}
               />
-            </div>
+            </Form.Group>
 
-            <div className="password-container">
+            <Form.Group className="password-container">
               <TextField
                 name="Password"
                 label="Password"
                 variant="outlined"
                 id="password"
                 type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) => dispatch(setPassword(e.target.value))}
               />
-            </div>
+            </Form.Group>
             <Button
               variant="contained"
               className="auth-button"
               size="small"
+              type="submit"
               style={{ height: "6vh", width: "10vw" }}
-              onClick={handleSignUp}
             >
               Create Account
             </Button>
             <p>
-              Already have an account? <NavLink to="/sign-in">Sign in</NavLink>
+              Already have an account? <Link to="/sign-in">Sign in</Link>
             </p>
-          </div>
+          </Form>
         </div>
       </div>
     </div>

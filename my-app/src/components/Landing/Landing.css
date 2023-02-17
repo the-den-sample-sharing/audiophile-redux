@@ -6,7 +6,7 @@
 .hero-main {
   width: 100vw;
   height: 100vh;
-  background-image: url(./assets/the-den-laptop.jpg);
+  /* background-image: url(./assets/the-den-laptop.jpg); */
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -19,8 +19,6 @@
   margin-top: 30vh;
   color: black;
   font-family: "Chakra Petch", sans-serif;
-}
-.hero-text-container {
 }
 
 .learn-more-btn {

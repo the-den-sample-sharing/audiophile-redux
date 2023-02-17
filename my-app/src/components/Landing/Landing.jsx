@@ -1,19 +1,18 @@
 import React from "react";
 import "./Landing.css";
-import Header from "../Header/Header";
+import Navbar from "../Nav/Navbar";
 import About from "../About/About";
 import { NavLink } from "react-router-dom";
 
 export default function Landing() {
   return (
     <div className="hero-body">
-      <Header />
+      <Navbar />
       <div className="hero-main">
         <div className="hero-text-container">
           <h1 className="hero-text">Welcome to The Den</h1>
-          <NavLink to={<About />}>
-            <button className="learn-more-btn">Learn more</button>
-          </NavLink>
+
+          <button className="learn-more-btn">Learn more</button>
         </div>
       </div>
       <div className="about-landing">
