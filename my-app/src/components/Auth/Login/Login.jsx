@@ -3,10 +3,10 @@ import { Link } from "react-router-dom";
 import { Button } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import "./Login.css";
-
+import logo from "../../../assets/transparent-logo.png";
 import { useDispatch, useSelector } from "react-redux";
 import { setEmail, setPassword } from "../../../features/user/userSlice";
-import { createUserAsync } from "../../../features/user/userSlice";
+import { loginUserAsync } from "../../../features/user/userSlice";
 import { Form } from "react-bootstrap";
 
 export default function Login() {
@@ -18,8 +18,8 @@ export default function Login() {
     <div className="auth-body">
       <div className="auth-main">
         <div className="login-header">
-          <img className="login-logo" alt="logo"></img>
-          <h1>The Den</h1>
+          <img className="login-logo" src={logo} alt="logo"></img>
+          <h1>Audiophile</h1>
         </div>
         <div className="login-message">
           <p>Login to your account.</p>
@@ -28,7 +28,7 @@ export default function Login() {
         <div className="input-container">
           <Form
             className="input-form"
-            onSubmit={() => createUserAsync(email, password)}
+            onSubmit={() => loginUserAsync(email, password)}
           >
             <Form.Group className="email-container">
               <TextField

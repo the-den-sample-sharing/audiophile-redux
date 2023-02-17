@@ -1,7 +1,10 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { signUpUser } from "../../services/auth";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { signUpUser, loginUser, getUser } from "../../services/auth";
 
 const initialState = {
+  loading: false,
+  userInfo: {},
+  status: "",
   email: "",
   password: "",
 };
@@ -14,6 +17,19 @@ export const createUserAsync = createAsyncThunk(
     return response.data;
   }
 );
+export const loginUserAsync = createAsyncThunk(
+  "user/loginUser",
+  async (email, password) => {
+    const response = await loginUser(email, password);
+
+    return response.data;
+  }
+);
+export const getUserAsync = createAsyncThunk("user/getUser", async () => {
+  const response = await getUser();
+
+  return response.data;
+});
 
 export const userSlice = createSlice({
   name: "user",
@@ -27,9 +43,19 @@ export const userSlice = createSlice({
       state.password = action.payload;
       console.log(state.password);
     },
+    // setUser: (state, action) => {},
+  },
+  extraReducers: {
+    [getUserAsync.pending]: (state) => {
+      state.status = "loading";
+    },
+    [getUserAsync.fulfilled]: (state, { payload }) => {
+      state.userInfo = payload;
+      state.status = "success";
+    },
   },
 });
 
-export const { setEmail, setPassword } = userSlice.actions;
+export const { setEmail, setPassword, setUser } = userSlice.actions;
 
 export default userSlice.reducer;

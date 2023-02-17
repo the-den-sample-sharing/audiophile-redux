@@ -5,18 +5,31 @@ import { Form } from "react-bootstrap";
 import "./SignUp.css";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setEmail, setPassword } from "../../../features/user/userSlice";
-import { createUserAsync } from "../../../features/user/userSlice";
+import {
+  setEmail,
+  setPassword,
+  setUser,
+} from "../../../features/user/userSlice";
+import {
+  createUserAsync,
+  getUserAsync,
+} from "../../../features/user/userSlice";
+import logo from "../../../assets/transparent-logo.png";
 
 export default function SignUp() {
-  const { email, password } = useSelector((state) => state.user);
-
+  const { email, password, userInfo, status } = useSelector(
+    (state) => state.user
+  );
   const dispatch = useDispatch();
+  const user = dispatch(getUserAsync());
+  if (status === "success") {
+    console.log("userrrr", user);
+  }
   return (
     <div className="auth-body">
       <div className="auth-main">
         <div className="login-header">
-          <img className="login-logo" alt="logo"></img>
+          <img className="login-logo" src={logo} alt="logo"></img>
           <h1>Audiophile</h1>
         </div>
         <div className="login-message">
@@ -26,7 +39,9 @@ export default function SignUp() {
         <div className="input-container">
           <Form
             className="input-form"
-            onSubmit={() => dispatch(createUserAsync(email, password))}
+            onSubmit={() => {
+              dispatch(createUserAsync(email, password));
+            }}
           >
             <Form.Group className="email-container">
               <TextField

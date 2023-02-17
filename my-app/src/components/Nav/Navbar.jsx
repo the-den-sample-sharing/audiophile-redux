@@ -1,15 +1,16 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Button } from "@mui/material";
 import "./Navbar.css";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
+import logo from "../../assets/transparent-logo.png";
 
 export default function Navbar() {
   return (
     <header className="nav-bar">
       <div className="nav-left">
         <div className="the-den">
-          <img className="logo" alt="logo"></img>
-          <h3>The Den</h3>
+          <img className="logo" src={logo} alt="logo"></img>
+          <h3>Audiophile</h3>
         </div>
         {/* <div className="nav-links">
           <NavLink to="/browse" style={{ color: "rgb(178, 178, 178)" }}>

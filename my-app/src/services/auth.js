@@ -29,13 +29,13 @@ export async function signUpUser(email, password) {
   });
   const data = await resp.json();
   if (resp.ok) {
-    await login(email, password);
+    await loginUser(email, password);
   } else {
     // eslint-disable-next-line no-console
     console.error(data.message);
   }
 }
-export async function login(email, password) {
+export async function loginUser(email, password) {
   const resp = await fetch(`${BASE_URL}/api/v1/users/sessions`, {
     method: "POST",
     headers: {
