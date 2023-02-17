@@ -27,10 +27,10 @@ export default function Navbar() {
       </div>
 
       <div className="sign-in-up">
-        <Link to="/log-in">
+        <Link to="/login" replace>
           <Button size="small">Login</Button>
         </Link>
-        <Link to="sign-up">
+        <Link to="/sign-up" replace>
           <Button variant="contained" size="small">
             Sign up
           </Button>
