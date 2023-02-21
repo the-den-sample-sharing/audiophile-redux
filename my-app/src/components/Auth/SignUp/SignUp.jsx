@@ -1,6 +1,5 @@
-import React from "react";
-import { Button } from "@mui/material";
-import TextField from "@mui/material/TextField";
+import React, { useEffect } from "react";
+import { Button, TextField } from "@mui/material";
 import { Form } from "react-bootstrap";
 import "./SignUp.css";
 import { Link } from "react-router-dom";
@@ -8,23 +7,28 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   setEmail,
   setPassword,
-  setUser,
-} from "../../../features/user/userSlice";
-import {
-  createUserAsync,
-  getUserAsync,
+  getUserStatus,
+  getUserInfo,
+  signUpUser,
+  getUserError,
+  getUserEmail,
+  getUserPassword,
 } from "../../../features/user/userSlice";
 import logo from "../../../assets/transparent-logo.png";
+import loadingGif from "../../../assets/loading-gif.gif";
 
 export default function SignUp() {
-  const { email, password, userInfo, status } = useSelector(
-    (state) => state.user
-  );
   const dispatch = useDispatch();
-  const user = dispatch(getUserAsync());
-  if (status === "success") {
-    console.log("userrrr", user);
-  }
+  const user = useSelector(getUserInfo);
+  const userStatus = useSelector(getUserStatus);
+  const error = useSelector(getUserError);
+  const email = useSelector(getUserEmail);
+  const password = useSelector(getUserPassword);
+
+  // useEffect(() => {
+  //   if (userStatus === '')
+  // })
+
   return (
     <div className="auth-body">
       <div className="auth-main">
@@ -39,9 +43,7 @@ export default function SignUp() {
         <div className="input-container">
           <Form
             className="input-form"
-            onSubmit={() => {
-              dispatch(createUserAsync(email, password));
-            }}
+            onSubmit={() => dispatch(signUpUser(email, password))}
           >
             <Form.Group className="email-container">
               <TextField
@@ -59,6 +61,7 @@ export default function SignUp() {
                 variant="outlined"
                 id="password"
                 type="password"
+                autoComplete="none"
                 onChange={(e) => dispatch(setPassword(e.target.value))}
               />
             </Form.Group>
@@ -79,4 +82,26 @@ export default function SignUp() {
       </div>
     </div>
   );
+  // }
+  // if (status === "loading") {
+  //   return (
+  //     <div className="auth-body">
+  //       <div className="auth-main">
+  //         <div className="login-header">
+  //           <img className="login-logo" src={logo} alt="logo"></img>
+  //           <h1>Audiophile</h1>
+  //         </div>
+  //         <div className="login-message">
+  //           <p className="create-account">Create your free account</p>
+  //           <p className="unlock">Unlock new skills and sounds.</p>
+  //         </div>
+  //         <div className="loading-container">
+  //           <div>
+  //             <img src={loadingGif} alt="loader" />
+  //           </div>
+  //         </div>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 }

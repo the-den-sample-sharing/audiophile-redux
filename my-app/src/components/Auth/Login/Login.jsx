@@ -10,10 +10,6 @@ import { loginUserAsync } from "../../../features/user/userSlice";
 import { Form } from "react-bootstrap";
 
 export default function Login() {
-  const { email, password } = useSelector((state) => state.user);
-
-  const dispatch = useDispatch();
-
   return (
     <div className="auth-body">
       <div className="auth-main">
@@ -26,17 +22,12 @@ export default function Login() {
         </div>
 
         <div className="input-container">
-          <Form
-            className="input-form"
-            onSubmit={() => loginUserAsync(email, password)}
-          >
+          <Form className="input-form">
             <Form.Group className="email-container">
               <TextField
                 // id="outlined-basic"
                 label="Email"
                 variant="outlined"
-                value={email}
-                onChange={(e) => dispatch(setEmail(e.target.value))}
               />
             </Form.Group>
 
@@ -46,10 +37,6 @@ export default function Login() {
                 label="Password"
                 variant="outlined"
                 type="password"
-                value={password}
-                onChange={(e) =>
-                  dispatch(setPassword(e.target.value.toString()))
-                }
               />
             </Form.Group>
             <Button

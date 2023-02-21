@@ -1,34 +1,36 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { signUpUser, loginUser, getUser } from "../../services/auth";
+import { loginUser, fetchUser, createUser } from "../../services/auth";
+import axios from "axios";
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const initialState = {
   loading: false,
   userInfo: {},
-  status: "",
+  status: "idle",
+  error: null,
   email: "",
   password: "",
 };
 
-export const createUserAsync = createAsyncThunk(
+export const signUpUser = createAsyncThunk(
   "user/signUpUser",
   async (email, password) => {
-    const response = await signUpUser(email, password);
-
-    return response.data;
+    try {
+      const response = await createUser(email, password);
+      return response.data;
+    } catch (err) {
+      return err.response.data;
+    }
   }
 );
-export const loginUserAsync = createAsyncThunk(
-  "user/loginUser",
-  async (email, password) => {
-    const response = await loginUser(email, password);
 
+export const getUser = createAsyncThunk("user/getUser", async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/api/v1/users/me`);
     return response.data;
+  } catch (err) {
+    return err.message;
   }
-);
-export const getUserAsync = createAsyncThunk("user/getUser", async () => {
-  const response = await getUser();
-
-  return response.data;
 });
 
 export const userSlice = createSlice({
@@ -43,19 +45,41 @@ export const userSlice = createSlice({
       state.password = action.payload;
       console.log(state.password);
     },
-    // setUser: (state, action) => {},
   },
-  extraReducers: {
-    [getUserAsync.pending]: (state) => {
-      state.status = "loading";
-    },
-    [getUserAsync.fulfilled]: (state, { payload }) => {
-      state.userInfo = payload;
-      state.status = "success";
-    },
+  extraReducers: (builder) => {
+    builder
+      .addCase(signUpUser.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(signUpUser.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.userInfo = action.payload;
+        console.log("userinfoo", state.userInfo);
+      })
+      .addCase(signUpUser.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      })
+      .addCase(getUser.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(getUser.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.userInfo = action.payload;
+        console.log("userinfoo", state.userInfo);
+      })
+      .addCase(getUser.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      });
   },
 });
 
-export const { setEmail, setPassword, setUser } = userSlice.actions;
+export const { setEmail, setPassword } = userSlice.actions;
+export const getUserStatus = (state) => state.user.status;
+export const getUserInfo = (state) => state.user.userInfo;
+export const getUserError = (state) => state.user.error;
+export const getUserEmail = (state) => state.user.email;
+export const getUserPassword = (state) => state.user.password;
 
 export default userSlice.reducer;
