@@ -7,6 +7,8 @@ import SignUp from "./components/Auth/SignUp/SignUp.jsx";
 import Layout from "./components/Page/Layout";
 import { Provider } from "react-redux";
 import { store } from "./app/store";
+import { getUser } from "./features/user/userSlice";
+import Browse from "./components/Browse/Browse";
 
 function App() {
   return (
@@ -19,6 +21,7 @@ function App() {
                 path="/landing"
                 element={<Landing to="/landing" />}
               ></Route>
+              <Route path="/browse" element={<Browse />}></Route>
               <Route path="login" element={<Login to="/login" replace />} />
               <Route
                 path="sign-up"

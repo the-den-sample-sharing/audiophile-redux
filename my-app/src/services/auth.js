@@ -27,6 +27,7 @@ export async function createUser(email, password) {
     body: JSON.stringify({ email, password }),
     credentials: "include",
   });
+  console.log("resp", resp);
   const data = await resp.json();
   if (resp.ok) {
     await loginUser(email, password);
@@ -46,10 +47,9 @@ export async function loginUser(email, password) {
     credentials: "include",
   });
   const data = await resp.json();
-  if (resp.ok) {
-  } else {
-    // eslint-disable-next-line no-console
+  if (!resp.ok) {
     console.error(data.message);
+    // eslint-disable-next-line no-console
   }
 }
 

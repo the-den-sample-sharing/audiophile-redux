@@ -3,6 +3,9 @@ import { Button } from "@mui/material";
 import "./Navbar.css";
 import { Link } from "react-router-dom";
 import logo from "../../assets/transparent-logo.png";
+import { Store } from "@reduxjs/toolkit";
+import { store } from "../../app/store";
+import { getUser } from "../../features/user/userSlice";
 
 export default function Navbar() {
   return (

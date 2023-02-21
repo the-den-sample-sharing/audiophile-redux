@@ -9,7 +9,7 @@ import {
   setPassword,
   getUserStatus,
   getUserInfo,
-  signUpUser,
+  createUser,
   getUserError,
   getUserEmail,
   getUserPassword,
@@ -19,15 +19,17 @@ import loadingGif from "../../../assets/loading-gif.gif";
 
 export default function SignUp() {
   const dispatch = useDispatch();
-  const user = useSelector(getUserInfo);
+  const userInfo = useSelector(getUserInfo);
   const userStatus = useSelector(getUserStatus);
   const error = useSelector(getUserError);
   const email = useSelector(getUserEmail);
   const password = useSelector(getUserPassword);
 
-  // useEffect(() => {
-  //   if (userStatus === '')
-  // })
+  const handleSignup = (email, password) => {
+    dispatch(createUser(email, password));
+  };
+  console.log("status", userStatus);
+  console.log("info", userInfo);
 
   return (
     <div className="auth-body">
@@ -43,7 +45,7 @@ export default function SignUp() {
         <div className="input-container">
           <Form
             className="input-form"
-            onSubmit={() => dispatch(signUpUser(email, password))}
+            onSubmit={() => handleSignup(email, password)}
           >
             <Form.Group className="email-container">
               <TextField
