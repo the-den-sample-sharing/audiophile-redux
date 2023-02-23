@@ -1,15 +1,37 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import "./Login.css";
 import logo from "../../../assets/transparent-logo.png";
 import { useDispatch, useSelector } from "react-redux";
-import { setEmail, setPassword } from "../../../features/user/userSlice";
-import { loginUserAsync } from "../../../features/user/userSlice";
+import {
+  login,
+  setEmail,
+  setPassword,
+  getUserEmail,
+  getUserPassword,
+  getUserInfo,
+  getUserStatus,
+} from "../../../features/user/userSlice";
+
 import { Form } from "react-bootstrap";
 
 export default function Login() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const userInfo = useSelector(getUserInfo);
+  const userStatus = useSelector(getUserStatus);
+  const email = useSelector(getUserEmail);
+  const password = useSelector(getUserPassword);
+
+  const handleLogin = (e, email, password) => {
+    e.preventDefault();
+    dispatch(login({ email: email, password: password }));
+  };
+  console.log("status", email);
+  console.log("info", userInfo);
+
   return (
     <div className="auth-body">
       <div className="auth-main">
@@ -22,12 +44,16 @@ export default function Login() {
         </div>
 
         <div className="input-container">
-          <Form className="input-form">
+          <Form
+            className="input-form"
+            onSubmit={(e) => handleLogin(e, email, password)}
+          >
             <Form.Group className="email-container">
               <TextField
                 // id="outlined-basic"
                 label="Email"
                 variant="outlined"
+                onChange={(e) => dispatch(setEmail(e.target.value))}
               />
             </Form.Group>
 
@@ -36,7 +62,9 @@ export default function Login() {
                 // id="outlined-basic"
                 label="Password"
                 variant="outlined"
+                autoComplete="none"
                 type="password"
+                onChange={(e) => dispatch(setPassword(e.target.value))}
               />
             </Form.Group>
             <Button

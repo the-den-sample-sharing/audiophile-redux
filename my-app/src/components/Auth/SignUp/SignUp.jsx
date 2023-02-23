@@ -1,35 +1,41 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Button, TextField } from "@mui/material";
 import { Form } from "react-bootstrap";
 import "./SignUp.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setEmail,
   setPassword,
-  getUserStatus,
-  getUserInfo,
   createUser,
-  getUserError,
   getUserEmail,
   getUserPassword,
+  getUserInfo,
+  getUserStatus,
+  login,
 } from "../../../features/user/userSlice";
 import logo from "../../../assets/transparent-logo.png";
 import loadingGif from "../../../assets/loading-gif.gif";
 
 export default function SignUp() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const userInfo = useSelector(getUserInfo);
   const userStatus = useSelector(getUserStatus);
-  const error = useSelector(getUserError);
   const email = useSelector(getUserEmail);
   const password = useSelector(getUserPassword);
 
-  const handleSignup = (email, password) => {
-    dispatch(createUser(email, password));
+  const handleSignup = (e, email, password) => {
+    e.preventDefault();
+    dispatch(createUser({ email: email, password: password }));
+    // dispatch(login({ email: email, password: password }));
   };
   console.log("status", userStatus);
   console.log("info", userInfo);
+
+  // if (userStatus === "succeeded") {
+  //   navigate("/landing");
+  // }
 
   return (
     <div className="auth-body">
@@ -45,7 +51,7 @@ export default function SignUp() {
         <div className="input-container">
           <Form
             className="input-form"
-            onSubmit={() => handleSignup(email, password)}
+            onSubmit={(e) => handleSignup(e, email, password)}
           >
             <Form.Group className="email-container">
               <TextField

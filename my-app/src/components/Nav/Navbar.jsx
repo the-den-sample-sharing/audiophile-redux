@@ -3,11 +3,17 @@ import { Button } from "@mui/material";
 import "./Navbar.css";
 import { Link } from "react-router-dom";
 import logo from "../../assets/transparent-logo.png";
-import { Store } from "@reduxjs/toolkit";
-import { store } from "../../app/store";
-import { getUser } from "../../features/user/userSlice";
+import { getUser, getUserInfo, logOut } from "../../features/user/userSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Navbar() {
+  const dispatch = useDispatch();
+  const userInfo = useSelector(getUserInfo);
+  const handleLogoutOut = () => {
+    dispatch(logOut);
+    console.log("clicked");
+  };
+
   return (
     <header className="nav-bar">
       <div className="nav-left">
@@ -31,6 +37,7 @@ export default function Navbar() {
       </div>
 
       <div className="sign-in-up">
+        <Button onClick={() => handleLogoutOut()}>Logout</Button>
         <Link to="/login" replace>
           <Button size="small">Login</Button>
         </Link>
