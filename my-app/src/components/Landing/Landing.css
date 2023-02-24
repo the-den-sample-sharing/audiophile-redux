@@ -1,0 +1,51 @@
+.hero-body {
+  width: 100vw;
+  height: 100vh;
+}
+
+.hero-main {
+  width: 100vw;
+  height: 100vh;
+  background-image: url(../../assets/the-den-laptop.jpg);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+}
+
+.hero-text {
+  font-size: 6vh;
+  margin-top: 30vh;
+  color: black;
+  font-family: "Chakra Petch", sans-serif;
+}
+
+.learn-more-btn {
+  height: 6vh;
+  width: 10vw;
+  color: white;
+  border-radius: 15px;
+  background: rgb(0, 0, 0);
+  background: linear-gradient(
+    207deg,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 48, 94, 1) 100%
+  );
+  border: 1px solid black;
+  font-family: "Chakra Petch", sans-serif;
+  font-weight: bold;
+  font-size: 2vh;
+  cursor: pointer;
+}
+
+.learn-more-btn:hover {
+  background: rgb(255, 255, 255);
+  background: linear-gradient(
+    207deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(0, 48, 94, 1) 100%
+  );
+  color: black;
+  transition: all 1s ease-in-out;
+}
