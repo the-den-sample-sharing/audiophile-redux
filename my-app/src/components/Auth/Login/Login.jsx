@@ -6,13 +6,13 @@ import "./Login.css";
 import logo from "../../../assets/transparent-logo.png";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  login,
   setEmail,
   setPassword,
   getUserEmail,
   getUserPassword,
-  getUserInfo,
   getUserStatus,
+  logIn,
+  getUserData,
 } from "../../../features/user/userSlice";
 
 import { Form } from "react-bootstrap";
@@ -20,17 +20,16 @@ import { Form } from "react-bootstrap";
 export default function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const userInfo = useSelector(getUserInfo);
+  const userData = useSelector(getUserData);
   const userStatus = useSelector(getUserStatus);
   const email = useSelector(getUserEmail);
   const password = useSelector(getUserPassword);
 
   const handleLogin = (e, email, password) => {
     e.preventDefault();
-    dispatch(login({ email: email, password: password }));
+    dispatch(logIn({ email: email, password: password }));
   };
-  console.log("status", email);
-  console.log("info", userInfo);
+  console.log("emailll", email);
 
   return (
     <div className="auth-body">

@@ -5,8 +5,9 @@ const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const initialState = {
   loading: false,
-  userInfo: {},
+  user: null,
   status: "idle",
+  isAuthenticated: false,
   error: null,
   email: "",
   password: "",
@@ -19,58 +20,41 @@ export const createUser = createAsyncThunk(
       const response = await axios.post(
         `${BASE_URL}/api/v1/users`,
         {
-          email: email,
-          password: password,
+          email,
+          password,
         },
         {
-          withCredentials: true,
-          method: "POST",
           headers: {
-            Accept: "application/json",
             "Content-Type": "application/json",
-          },
-          form: {
-            email: email,
-            password: password,
           },
         }
       );
       console.log(response.data);
       return response.data;
     } catch (err) {
-      return err.response.data;
+      throw new Error(err.response.data);
     }
   }
 );
 
-export const login = createAsyncThunk(
-  "user/login",
+export const logIn = createAsyncThunk(
+  "user/logIn",
   async ({ email, password }) => {
     try {
-      const token = localStorage.getItem("token");
-      console.log("tokennn", token);
       const response = await axios.post(
         `${BASE_URL}/api/v1/users/sessions`,
         {
-          email: email,
-          password: password,
+          email,
+          password,
         },
         {
           withCredentials: true,
-          url: `${BASE_URL}/api/v1/users/sessions`,
-          method: "POST",
           headers: {
-            Authorization: `Bearer ${token}`,
-            Accept: "application/json",
             "Content-Type": "application/json",
-          },
-          data: {
-            email: email,
-            password: password,
           },
         }
       );
-      console.log(response.data);
+
       return response.data;
     } catch (err) {
       throw new Error(err.response.data.message);
@@ -82,7 +66,6 @@ export const getUser = createAsyncThunk("user/getUser", async () => {
   try {
     const response = await axios.get(`${BASE_URL}/api/v1/users/me`, {
       withCredentials: true,
-      method: "GET",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -90,18 +73,15 @@ export const getUser = createAsyncThunk("user/getUser", async () => {
     });
     return response.data;
   } catch (err) {
-    return err.message;
+    throw new Error(err.response.data.message);
   }
 });
 export const logOut = createAsyncThunk("user/logOut", async () => {
   try {
-    const response = await axios.delete(`${BASE_URL}/api/v1/users/sessions`, {
-      method: "DELETE",
-      credentials: "include",
-    });
+    const response = await axios.delete(`${BASE_URL}/api/v1/users/sessions`);
     return response.data;
   } catch (err) {
-    return err.message;
+    throw new Error(err.response.data.message);
   }
 });
 
@@ -132,15 +112,16 @@ export const userSlice = createSlice({
         state.status = "failed";
         state.error = action.error.message;
       })
-      .addCase(login.pending, (state) => {
+      .addCase(logIn.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(login.fulfilled, (state, action) => {
+      .addCase(logIn.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.userInfo = action.payload;
+        state.user = action.payload;
         console.log("statusss", state.status);
+        console.log("userr", state.user);
       })
-      .addCase(login.rejected, (state, action) => {
+      .addCase(logIn.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
       })
@@ -150,25 +131,28 @@ export const userSlice = createSlice({
       })
       .addCase(getUser.fulfilled, (state, action) => {
         state.status = "succeeded";
-        console.log(action.payload);
-        return action.payload;
+        state.user = action.payload;
+        console.log("getuserr", state.user);
       })
       .addCase(getUser.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
       })
+      .addCase(logOut.pending, (state) => {
+        state.status = "loading";
+      })
       .addCase(logOut.fulfilled, (state, action) => {
         state.status = "succeeded";
         console.log("statusss", state.status);
         console.log("loggedout");
-        return action.payload;
+        state.user = action.payload;
       });
   },
 });
 
 export const { setEmail, setPassword } = userSlice.actions;
 export const getUserStatus = (state) => state.user.status;
-export const getUserInfo = (state) => state.user.userInfo;
+export const getUserData = (state) => state.user.user;
 export const getUserError = (state) => state.user.error;
 export const getUserEmail = (state) => state.user.email;
 export const getUserPassword = (state) => state.user.password;

@@ -10,9 +10,9 @@ import {
   createUser,
   getUserEmail,
   getUserPassword,
-  getUserInfo,
   getUserStatus,
   login,
+  getUserData,
 } from "../../../features/user/userSlice";
 import logo from "../../../assets/transparent-logo.png";
 import loadingGif from "../../../assets/loading-gif.gif";
@@ -20,7 +20,7 @@ import loadingGif from "../../../assets/loading-gif.gif";
 export default function SignUp() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const userInfo = useSelector(getUserInfo);
+  const userData = useSelector(getUserData);
   const userStatus = useSelector(getUserStatus);
   const email = useSelector(getUserEmail);
   const password = useSelector(getUserPassword);
@@ -31,7 +31,7 @@ export default function SignUp() {
     // dispatch(login({ email: email, password: password }));
   };
   console.log("status", userStatus);
-  console.log("info", userInfo);
+  console.log("info", userData);
 
   // if (userStatus === "succeeded") {
   //   navigate("/landing");
