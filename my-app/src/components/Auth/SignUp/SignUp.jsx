@@ -13,6 +13,7 @@ import {
   getUserStatus,
   login,
   getUserData,
+  logIn,
 } from "../../../features/user/userSlice";
 import logo from "../../../assets/transparent-logo.png";
 import loadingGif from "../../../assets/loading-gif.gif";
@@ -28,14 +29,10 @@ export default function SignUp() {
   const handleSignup = (e, email, password) => {
     e.preventDefault();
     dispatch(createUser({ email: email, password: password }));
-    // dispatch(login({ email: email, password: password }));
+    dispatch(logIn({ email: email, password: password }));
   };
   console.log("status", userStatus);
   console.log("info", userData);
-
-  // if (userStatus === "succeeded") {
-  //   navigate("/landing");
-  // }
 
   return (
     <div className="auth-body">

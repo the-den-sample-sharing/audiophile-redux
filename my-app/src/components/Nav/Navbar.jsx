@@ -8,11 +8,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { signOut } from "../../services/auth";
 
 export default function Navbar() {
-  const dispatch = useDispatch();
   const userData = useSelector(getUserData);
   const handleLogoutOut = async () => {
     await signOut();
-    console.log("clicked");
   };
 
   return (

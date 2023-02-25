@@ -1,8 +1,6 @@
 import React from "react";
 import "./Landing.css";
-import Navbar from "../Nav/Navbar";
 import About from "../About/About";
-import { NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { getUser } from "../../features/user/userSlice";
 

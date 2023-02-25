@@ -9,6 +9,7 @@ import { Provider } from "react-redux";
 import { store } from "./app/store";
 import { getUser } from "./features/user/userSlice";
 import Browse from "./components/Browse/Browse";
+import CreateProfile from "./components/CreateProfile/CreateProfile";
 
 function App() {
   return (
@@ -17,15 +18,17 @@ function App() {
         <Provider store={store}>
           <Routes>
             <Route element={<Layout />}>
+              <Route path="/landing" element={<Landing to="/landing" />} />
+
+              <Route path="/browse" element={<Browse />} />
+              <Route path="/login" element={<Login to="/login" replace />} />
               <Route
-                path="/landing"
-                element={<Landing to="/landing" />}
-              ></Route>
-              <Route path="/browse" element={<Browse />}></Route>
-              <Route path="login" element={<Login to="/login" replace />} />
-              <Route
-                path="sign-up"
+                path="/sign-up"
                 element={<SignUp to="/sign-up" replace />}
+              />
+              <Route
+                path="/create-profile"
+                element={<CreateProfile to="/create-profile" replace />}
               />
             </Route>
           </Routes>
