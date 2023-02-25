@@ -2,7 +2,7 @@ import React from "react";
 import { Button, TextField } from "@mui/material";
 import { Form } from "react-bootstrap";
 import "./SignUp.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setEmail,
@@ -10,9 +10,6 @@ import {
   createUser,
   getUserEmail,
   getUserPassword,
-  getUserStatus,
-  login,
-  getUserData,
   logIn,
 } from "../../../features/user/userSlice";
 import logo from "../../../assets/transparent-logo.png";
@@ -20,9 +17,7 @@ import loadingGif from "../../../assets/loading-gif.gif";
 
 export default function SignUp() {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const userData = useSelector(getUserData);
-  const userStatus = useSelector(getUserStatus);
+
   const email = useSelector(getUserEmail);
   const password = useSelector(getUserPassword);
 
@@ -31,8 +26,6 @@ export default function SignUp() {
     dispatch(createUser({ email: email, password: password }));
     dispatch(logIn({ email: email, password: password }));
   };
-  console.log("status", userStatus);
-  console.log("info", userData);
 
   return (
     <div className="auth-body">

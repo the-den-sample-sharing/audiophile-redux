@@ -4,10 +4,26 @@ import logo from "../../assets/transparent-logo.png";
 import { Button, TextField, Avatar } from "@mui/material";
 import useAvatar from "../../hooks/useAvatar";
 import { Link, useNavigate } from "react-router-dom";
-
+import {
+  setFirstName,
+  setBio,
+  setLastName,
+  setUsername,
+  getFirstName,
+  getLastName,
+  getUsername,
+  getBio,
+} from "../../features/profile/profileSlice";
 import { Form } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function CreateProfile() {
+  const dispatch = useDispatch();
+  const firstName = useSelector(getFirstName);
+  const lastName = useSelector(getLastName);
+  const username = useSelector(getUsername);
+  const bio = useSelector(getBio);
+
   return (
     <div>
       <div className="auth-body">
@@ -29,27 +45,25 @@ export default function CreateProfile() {
                   name="image"
                   type="file"
                   accept="*/"
-                  // onChange={(e) => {
-                  //   setImageFile(e.target.files[0]);
-                  //   uploader(e);
-                  // }}
                 ></input>
-                <Avatar
-                  // src={result}
-                  // ref={imageRef}
-                  sx={{ width: 100, height: 100 }}
-                />
+                <Avatar sx={{ width: 100, height: 100 }} />
               </div>
               <Form.Group className="name-inputs">
                 <TextField
-                  // id="outlined-basic"
-                  label="First name"
+                  label="First Name"
                   variant="outlined"
+                  autoComplete="none"
+                  onChange={(e) => {
+                    dispatch(setFirstName(e.target.value));
+                  }}
                 />
                 <TextField
                   label="Last Name"
                   variant="outlined"
                   autoComplete="none"
+                  onChange={(e) => {
+                    dispatch(setLastName(e.target.value));
+                  }}
                 />
               </Form.Group>
 
@@ -58,10 +72,19 @@ export default function CreateProfile() {
                   label="Username"
                   variant="outlined"
                   autoComplete="none"
+                  onChange={(e) => {
+                    dispatch(setUsername(e.target.value));
+                  }}
                 />
               </Form.Group>
               <Form.Group className="bio-input">
-                <TextField label="Bio (optional)" variant="outlined" />
+                <TextField
+                  label="Bio (optional)"
+                  variant="outlined"
+                  onChange={(e) => {
+                    dispatch(setBio(e.target.value));
+                  }}
+                />
               </Form.Group>
               <Button
                 variant="contained"

@@ -1,7 +1,6 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Button } from "@mui/material";
-import TextField from "@mui/material/TextField";
+import { Button, TextField } from "@mui/material";
 import "./Login.css";
 import logo from "../../../assets/transparent-logo.png";
 import { useDispatch, useSelector } from "react-redux";
