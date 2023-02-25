@@ -13,16 +13,31 @@ import {
   getLastName,
   getUsername,
   getBio,
+  getProfileData,
+  createProfile,
 } from "../../features/profile/profileSlice";
 import { Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function CreateProfile() {
   const dispatch = useDispatch();
-  const firstName = useSelector(getFirstName);
+  const profileData = useSelector(getProfileData);
   const lastName = useSelector(getLastName);
+  const firstName = useSelector(getFirstName);
   const username = useSelector(getUsername);
   const bio = useSelector(getBio);
+
+  const handleSubmitProfile = (e, firstName, lastName, username, bio) => {
+    e.preventDefault();
+    dispatch(
+      createProfile({
+        firstName: firstName,
+        lastName: lastName,
+        username: username,
+        bio: bio,
+      })
+    );
+  };
 
   return (
     <div>
@@ -37,7 +52,12 @@ export default function CreateProfile() {
           </div>
 
           <div className="input-container">
-            <Form className="input-form">
+            <Form
+              className="input-form"
+              onSubmit={(e) => {
+                handleSubmitProfile(e, firstName, lastName, username, bio);
+              }}
+            >
               <div className="photo-container">
                 <label>Add Profile photo:</label>
                 <input
