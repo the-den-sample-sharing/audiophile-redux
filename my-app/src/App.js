@@ -10,6 +10,8 @@ import { store } from "./app/store";
 import { getUser } from "./features/user/userSlice";
 import Browse from "./components/Browse/Browse";
 import CreateProfile from "./components/CreateProfile/CreateProfile";
+import UserProfile from "./components/UserProfile/UserProfile";
+import Navbar from "./components/Nav/Navbar";
 
 function App() {
   return (
@@ -18,9 +20,9 @@ function App() {
         <Provider store={store}>
           <Routes>
             <Route element={<Layout />}>
+              <Route element={<Navbar />} />
               <Route path="/landing" element={<Landing to="/landing" />} />
 
-              <Route path="/browse" element={<Browse />} />
               <Route path="/login" element={<Login to="/login" replace />} />
               <Route
                 path="/sign-up"
@@ -29,6 +31,10 @@ function App() {
               <Route
                 path="/create-profile"
                 element={<CreateProfile to="/create-profile" replace />}
+              />
+              <Route
+                path="/user-profile"
+                element={<UserProfile to="/user-profile" replace />}
               />
             </Route>
           </Routes>

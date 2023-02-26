@@ -41,17 +41,17 @@ export default function CreateProfile() {
 
   return (
     <div>
-      <div className="auth-body">
-        <div className="auth-main">
-          <div className="login-header">
+      <div className="create-profile-body">
+        <div className="create-profile-main">
+          <div className="create-profile-header">
             <img className="login-logo" src={logo} alt="logo"></img>
             <h1>Audiophile</h1>
           </div>
-          <div className="login-message">
+          <div className="create-profile-message">
             <p>Create your custom profile.</p>
           </div>
 
-          <div className="input-container">
+          <div className="profile-input-container">
             <Form
               className="input-form"
               onSubmit={(e) => {
@@ -68,7 +68,7 @@ export default function CreateProfile() {
                 ></input>
                 <Avatar sx={{ width: 100, height: 100 }} />
               </div>
-              <Form.Group className="name-inputs">
+              <Form.Group className="first-name-input">
                 <TextField
                   label="First Name"
                   variant="outlined"
@@ -77,6 +77,8 @@ export default function CreateProfile() {
                     dispatch(setFirstName(e.target.value));
                   }}
                 />
+              </Form.Group>
+              <Form.Group className="last-name-input">
                 <TextField
                   label="Last Name"
                   variant="outlined"

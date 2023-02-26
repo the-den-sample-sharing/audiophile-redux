@@ -1,0 +1,38 @@
+.user-profile-body {
+  height: 93vh;
+  width: 100%;
+  margin-top: 7vh;
+}
+
+.user-profile-main {
+  display: grid;
+  grid-template-rows: 4fr 6fr;
+  width: 100%;
+  height: 100%;
+}
+
+.avatar-name-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 5vh;
+}
+
+.name-container {
+  margin: 4vh;
+}
+
+.user-profile-top-grid {
+  height: 40vh;
+  width: 100vw;
+  margin-bottom: none;
+  background-color: gray;
+}
+.user-profile-bottom-grid {
+  height: 60vh;
+  width: 100vw;
+  margin-top: none;
+  background-color: white;
+}

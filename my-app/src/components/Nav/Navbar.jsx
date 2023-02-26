@@ -3,12 +3,9 @@ import { Button } from "@mui/material";
 import "./Navbar.css";
 import { Link } from "react-router-dom";
 import logo from "../../assets/transparent-logo.png";
-import { getUser, getUserData, logOut } from "../../features/user/userSlice";
-import { useDispatch, useSelector } from "react-redux";
 import { signOut } from "../../services/auth";
 
 export default function Navbar() {
-  const userData = useSelector(getUserData);
   const handleLogoutOut = async () => {
     await signOut();
   };

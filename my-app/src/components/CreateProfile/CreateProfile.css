@@ -1,0 +1,51 @@
+.profile-input-container {
+  border-radius: 8px;
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+  padding-left: 3vh;
+  padding-right: 3vh;
+  padding-top: 2vh;
+  padding-bottom: 2vh;
+  height: 30vh;
+  font-family: "Prompt", sans-serif;
+}
+
+.create-profile-main {
+  background-size: cover;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+}
+
+.input-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2vh;
+  gap: 2vh;
+}
+
+.create-profile-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 1vh;
+  height: 5vh;
+  font-family: "Chakra Petch", sans-serif;
+  font-weight: bold;
+  color: black;
+}
+
+.login-logo {
+  margin-right: 1vh;
+  height: 5vh;
+}
+
+.create-profile-message {
+  color: black;
+  font-family: "Varela Round", sans-serif;
+}
