@@ -4,7 +4,6 @@ import axios from "axios";
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 const initialState = {
-  loading: false,
   profileData: null,
   status: "idle",
   isAuthenticated: false,
@@ -37,6 +36,25 @@ export const createProfile = createAsyncThunk(
       return response.data;
     } catch (err) {
       throw new Error(err.response.data);
+    }
+  }
+);
+
+export const getUserProfile = createAsyncThunk(
+  "profile/getUserProfile",
+  async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/api/v1/profiles`, {
+        withCredentials: true,
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      });
+      console.log("responseeee", response.data);
+      return response.data;
+    } catch (err) {
+      throw new Error(err.response.data.message);
     }
   }
 );
@@ -74,6 +92,18 @@ export const profileSlice = createSlice({
       .addCase(createProfile.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
+      })
+      .addCase(getUserProfile.pending, (state) => {
+        state.status = "idle";
+      })
+      .addCase(getUserProfile.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.profileData = action.payload;
+        console.log("sliceprofile", state.profileData);
+      })
+      .addCase(getUserProfile.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
       });
   },
 });
@@ -86,5 +116,6 @@ export const getLastName = (state) => state.profile.lastName;
 export const getUsername = (state) => state.profile.username;
 export const getBio = (state) => state.profile.bio;
 export const getProfileData = (state) => state.profile.bio;
+export const getLoadStatus = (state) => state.profile.status;
 
 export default profileSlice.reducer;

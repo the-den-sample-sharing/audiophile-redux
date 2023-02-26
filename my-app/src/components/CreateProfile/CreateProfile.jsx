@@ -21,7 +21,6 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function CreateProfile() {
   const dispatch = useDispatch();
-  const profileData = useSelector(getProfileData);
   const lastName = useSelector(getLastName);
   const firstName = useSelector(getFirstName);
   const username = useSelector(getUsername);
