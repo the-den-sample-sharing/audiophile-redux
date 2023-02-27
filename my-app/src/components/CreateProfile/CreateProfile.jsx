@@ -9,12 +9,14 @@ import {
   setBio,
   setLastName,
   setUsername,
+  setAvatarFile,
   getFirstName,
   getLastName,
   getUsername,
   getBio,
   getProfileData,
   createProfile,
+  getAvatarFile,
 } from "../../features/profile/profileSlice";
 import { Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
@@ -25,17 +27,36 @@ export default function CreateProfile() {
   const firstName = useSelector(getFirstName);
   const username = useSelector(getUsername);
   const bio = useSelector(getBio);
+  const avatarFile = useSelector(getAvatarFile);
 
-  const handleSubmitProfile = (e, firstName, lastName, username, bio) => {
+  // const uploader = (e, dispatch) => {
+  //   const imageFile = e.target.files[0];
+  //   const reader = new FileReader();
+  //   reader.addEventListener("load", (e) => {
+  //     dispatch(setAvatarFile(e.target.result));
+  //   });
+  //   reader.readAsDataURL(imageFile);
+  // };
+
+  const handleSubmitProfile = (
+    e,
+    firstName,
+    lastName,
+    username,
+    bio,
+    avatarFile,
+    dispatch
+  ) => {
     e.preventDefault();
-    dispatch(
-      createProfile({
-        firstName: firstName,
-        lastName: lastName,
-        username: username,
-        bio: bio,
-      })
-    );
+    const formData = new FormData();
+    formData.append("firstName", firstName);
+    formData.append("lastName", lastName);
+    formData.append("username", username);
+    formData.append("bio", bio);
+    if (avatarFile) {
+      formData.append("avatar", avatarFile);
+    }
+    dispatch(createProfile(formData));
   };
 
   return (
@@ -54,19 +75,30 @@ export default function CreateProfile() {
             <Form
               className="input-form"
               onSubmit={(e) => {
-                handleSubmitProfile(e, firstName, lastName, username, bio);
+                handleSubmitProfile(
+                  e,
+                  firstName,
+                  lastName,
+                  username,
+                  bio,
+                  avatarFile,
+                  dispatch
+                );
               }}
             >
-              <div className="photo-container">
+              <Form.Group className="photo-container">
                 <label>Add Profile photo:</label>
-                <input
+                <Form.Control
                   className="photo-input"
-                  name="image"
+                  name="avatar"
                   type="file"
-                  accept="*/"
-                ></input>
+                  accept="/*"
+                  onChange={(e) => {
+                    dispatch(setAvatarFile(e.target.files[0]));
+                  }}
+                ></Form.Control>
                 <Avatar sx={{ width: 100, height: 100 }} />
-              </div>
+              </Form.Group>
               <Form.Group className="first-name-input">
                 <TextField
                   label="First Name"

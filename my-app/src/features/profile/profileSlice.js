@@ -11,24 +11,21 @@ const initialState = {
   firstName: "",
   lastName: "",
   bio: "",
+  avatarFile: null,
 };
 
 export const createProfile = createAsyncThunk(
   "profile/createProfile",
-  async ({ firstName, lastName, username, bio }) => {
+  async (formData) => {
+    console.log("formdata", formData);
     try {
       const response = await axios.post(
         `${BASE_URL}/api/v1/profiles`,
-        {
-          firstName,
-          lastName,
-          username,
-          bio,
-        },
+        formData,
         {
           withCredentials: true,
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "multipart/form-data",
           },
         }
       );
@@ -65,19 +62,19 @@ export const profileSlice = createSlice({
   reducers: {
     setFirstName: (state, action) => {
       state.firstName = action.payload;
-      console.log(state.firstName);
     },
     setLastName: (state, action) => {
       state.lastName = action.payload;
-      console.log(state.lastName);
     },
     setUsername: (state, action) => {
       state.username = action.payload;
-      console.log(state.username);
     },
     setBio: (state, action) => {
       state.bio = action.payload;
-      console.log(state.bio);
+    },
+    setAvatarFile: (state, action) => {
+      state.avatarFile = action.payload;
+      console.log(state.avatarFile);
     },
   },
   extraReducers: (builder) => {
@@ -108,7 +105,7 @@ export const profileSlice = createSlice({
   },
 });
 
-export const { setFirstName, setBio, setLastName, setUsername } =
+export const { setFirstName, setBio, setLastName, setUsername, setAvatarFile } =
   profileSlice.actions;
 
 export const getFirstName = (state) => state.profile.firstName;
@@ -117,5 +114,6 @@ export const getUsername = (state) => state.profile.username;
 export const getBio = (state) => state.profile.bio;
 export const getProfileData = (state) => state.profile.bio;
 export const getLoadStatus = (state) => state.profile.status;
+export const getAvatarFile = (state) => state.profile.avatarFile;
 
 export default profileSlice.reducer;
