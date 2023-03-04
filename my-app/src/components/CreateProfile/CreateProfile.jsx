@@ -90,6 +90,7 @@ export default function CreateProfile() {
                   className="photo-input"
                   name="avatar"
                   type="file"
+                  title=" "
                   accept="/*"
                   onChange={(e) => {
                     const file = e.target.files[0];
@@ -112,8 +113,6 @@ export default function CreateProfile() {
                     dispatch(setFirstName(e.target.value));
                   }}
                 />
-              </Form.Group>
-              <Form.Group className="last-name-input">
                 <TextField
                   label="Last Name"
                   variant="outlined"

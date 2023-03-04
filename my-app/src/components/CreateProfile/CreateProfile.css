@@ -2,17 +2,25 @@
   border-radius: 8px;
   display: grid;
   grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
-  padding-left: 3vh;
-  padding-right: 3vh;
-  padding-top: 2vh;
-  padding-bottom: 2vh;
-  height: 30vh;
+
+  height: 25vh;
   font-family: "Prompt", sans-serif;
+}
+.create-profile-body {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.input-form {
+  height: auto;
 }
 
 .create-profile-main {
-  background-size: cover;
-  height: 100vh;
+  margin-top: 12vh;
+  height: 100%;
+  /* margin-bottom: 10vh; */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -25,8 +33,16 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 2vh;
   gap: 2vh;
+}
+
+input[type="file"] {
+  color: rgba(0, 0, 0, 0);
+}
+.photo-input {
+  margin-top: 1vh;
+  margin-bottom: 1vh;
+  margin-left: 11.7vw;
 }
 
 .create-profile-header {
@@ -48,4 +64,11 @@
 .create-profile-message {
   color: black;
   font-family: "Varela Round", sans-serif;
+}
+
+.photo-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
