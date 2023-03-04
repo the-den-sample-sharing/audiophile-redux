@@ -11,17 +11,44 @@ const initialState = {
   firstName: "",
   lastName: "",
   bio: "",
+  username: "",
   avatarFile: null,
 };
 
 export const createProfile = createAsyncThunk(
   "profile/createProfile",
-  async (formData) => {
-    console.log("formdata", formData);
+  async (formdata) => {
     try {
       const response = await axios.post(
         `${BASE_URL}/api/v1/profiles`,
-        formData,
+
+        formdata,
+
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log(response.data);
+      return response.data;
+    } catch (err) {
+      throw new Error(err.response.data);
+    }
+  }
+);
+export const avatarUpload = createAsyncThunk(
+  "profile/avatarUpload",
+  async (avatarFile) => {
+    try {
+      const formdata = new FormData();
+      formdata.append("avatar", avatarFile);
+      const response = await axios.post(
+        `${BASE_URL}/api/v1/profiles/avatars`,
+
+        formdata,
+
         {
           withCredentials: true,
           headers: {
@@ -76,6 +103,9 @@ export const profileSlice = createSlice({
       state.avatarFile = action.payload;
       console.log(state.avatarFile);
     },
+    setAvatar: (state, action) => {
+      state.profileData.avatar = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -87,6 +117,17 @@ export const profileSlice = createSlice({
         state.profileData = action.payload;
       })
       .addCase(createProfile.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      })
+      .addCase(avatarUpload.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(avatarUpload.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.profileData.avatar = action.payload;
+      })
+      .addCase(avatarUpload.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
       })

@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import "./CreateProfile.css";
 import logo from "../../assets/transparent-logo.png";
 import { Button, TextField, Avatar } from "@mui/material";
@@ -14,9 +14,9 @@ import {
   getLastName,
   getUsername,
   getBio,
-  getProfileData,
   createProfile,
   getAvatarFile,
+  avatarUpload,
 } from "../../features/profile/profileSlice";
 import { Form } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
@@ -28,17 +28,9 @@ export default function CreateProfile() {
   const username = useSelector(getUsername);
   const bio = useSelector(getBio);
   const avatarFile = useSelector(getAvatarFile);
+  const [avatarPreview, setAvatarPreview] = useState("");
 
-  // const uploader = (e, dispatch) => {
-  //   const imageFile = e.target.files[0];
-  //   const reader = new FileReader();
-  //   reader.addEventListener("load", (e) => {
-  //     dispatch(setAvatarFile(e.target.result));
-  //   });
-  //   reader.readAsDataURL(imageFile);
-  // };
-
-  const handleSubmitProfile = (
+  const handleSubmitProfile = async (
     e,
     firstName,
     lastName,
@@ -48,15 +40,21 @@ export default function CreateProfile() {
     dispatch
   ) => {
     e.preventDefault();
+
     const formData = new FormData();
     formData.append("firstName", firstName);
     formData.append("lastName", lastName);
     formData.append("username", username);
     formData.append("bio", bio);
-    if (avatarFile) {
-      formData.append("avatar", avatarFile);
+    formData.append("avatar", avatarFile);
+
+    try {
+      const response = await dispatch(createProfile(formData));
+      await dispatch(avatarUpload(avatarFile));
+      console.log(response.data);
+    } catch (err) {
+      console.error(err);
     }
-    dispatch(createProfile(formData));
   };
 
   return (
@@ -94,10 +92,16 @@ export default function CreateProfile() {
                   type="file"
                   accept="/*"
                   onChange={(e) => {
-                    dispatch(setAvatarFile(e.target.files[0]));
+                    const file = e.target.files[0];
+                    const reader = new FileReader();
+                    reader.onload = () => {
+                      setAvatarPreview(reader.result);
+                    };
+                    reader.readAsDataURL(file);
+                    dispatch(setAvatarFile(file));
                   }}
                 ></Form.Control>
-                <Avatar sx={{ width: 100, height: 100 }} />
+                <Avatar sx={{ width: 100, height: 100 }} src={avatarPreview} />
               </Form.Group>
               <Form.Group className="first-name-input">
                 <TextField
