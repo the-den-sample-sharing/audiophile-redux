@@ -13,10 +13,12 @@ export default function Navbar() {
   return (
     <header className="nav-bar">
       <div className="nav-left">
-        <div className="the-den">
-          <img className="logo" src={logo} alt="logo"></img>
-          <h3>Audiophile</h3>
-        </div>
+        <Link>
+          <div className="the-den">
+            <img className="logo" src={logo} alt="logo"></img>
+            <h3>Audiophile</h3>
+          </div>
+        </Link>
       </div>
 
       <div className="sign-in-up">

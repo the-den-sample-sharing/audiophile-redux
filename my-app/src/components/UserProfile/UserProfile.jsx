@@ -4,6 +4,7 @@ import loader from "../../assets/loading-gif.gif";
 import { Avatar } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  getAvatar,
   getLoadStatus,
   getUserProfile,
 } from "../../features/profile/profileSlice";
@@ -17,6 +18,7 @@ export default function UserProfile() {
   console.log("profileeee", userProfile);
   useEffect(() => {
     dispatch(getUserProfile());
+    dispatch(getAvatar());
   }, [dispatch]);
 
   if (status === "idle") {

@@ -24,7 +24,6 @@ export default function SignUp() {
   const handleSignup = (e, email, password) => {
     e.preventDefault();
     dispatch(createUser({ email: email, password: password }));
-    dispatch(logIn({ email: email, password: password }));
   };
 
   return (

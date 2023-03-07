@@ -42,14 +42,18 @@ export default function CreateProfile() {
     e.preventDefault();
 
     const formData = new FormData();
-    formData.append("firstName", firstName);
-    formData.append("lastName", lastName);
-    formData.append("username", username);
-    formData.append("bio", bio);
+
     formData.append("avatar", avatarFile);
 
     try {
-      const response = await dispatch(createProfile(formData));
+      const response = await dispatch(
+        createProfile({
+          firstName: firstName,
+          lastName: lastName,
+          username: username,
+          bio: bio,
+        })
+      );
       await dispatch(avatarUpload(avatarFile));
       console.log(response.data);
     } catch (err) {
@@ -102,7 +106,7 @@ export default function CreateProfile() {
                     dispatch(setAvatarFile(file));
                   }}
                 ></Form.Control>
-                <Avatar sx={{ width: 100, height: 100 }} src={avatarPreview} />
+                <Avatar sx={{ width: 120, height: 120 }} src={avatarPreview} />
               </Form.Group>
               <Form.Group className="first-name-input">
                 <TextField

@@ -17,12 +17,16 @@ const initialState = {
 
 export const createProfile = createAsyncThunk(
   "profile/createProfile",
-  async (formdata) => {
+  async ({ firstName, lastName, username, bio }) => {
     try {
       const response = await axios.post(
         `${BASE_URL}/api/v1/profiles`,
-
-        formdata,
+        {
+          firstName,
+          lastName,
+          username,
+          bio,
+        },
 
         {
           withCredentials: true,
@@ -69,6 +73,24 @@ export const getUserProfile = createAsyncThunk(
   async () => {
     try {
       const response = await axios.get(`${BASE_URL}/api/v1/profiles`, {
+        withCredentials: true,
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      });
+      console.log("responseeee", response.data);
+      return response.data;
+    } catch (err) {
+      throw new Error(err.response.data.message);
+    }
+  }
+);
+export const getAvatar = createAsyncThunk(
+  "profile/getUserProfile",
+  async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/api/v1/profiles/avatars`, {
         withCredentials: true,
         headers: {
           Accept: "application/json",
